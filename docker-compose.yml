@@ -2,21 +2,22 @@ version: "3"
 networks:
   app-tier:
     driver: bridge
+volumes:
+  mysqldata:
+    driver: "local"
+  redisdata:
+    driver: "local"
 services:
   app:
     build:
       context: .
       dockerfile: .docker/php/Dockerfile
-    depends_on:
-      - mariadb
     networks:
       - app-tier
     ports:
       - 9002:9000
     volumes:
       - .:/srv/app
-    links:
-      - mariadb:mariadb
   nginx:
     build:
       context: .
@@ -28,11 +29,21 @@ services:
     volumes:
       - ./public:/srv/app/public
   mariadb:
-    networks:
-      - app-tier
     image: mariadb:10.3
+    restart: always
+    container_name: mariadb
     ports:
       - "13306:3306"
+    networks:
+      - app-tier
     environment:
       - MYSQL_DATABASE=root
       - MYSQL_ROOT_PASSWORD=secret
+    volumes:
+     - mysqldata:/var/lib/mysql
+  redis:
+    image: redis:alpine
+    volumes:
+     - redisdata:/data
+    networks:
+     - app-tier
