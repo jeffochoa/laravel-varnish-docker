@@ -1,4 +1,7 @@
 <?php
+
+echo "hola";
+
 phpinfo();
 // if (PHP_SAPI == 'cli-server') {
 //     // To help the built-in PHP dev server, check if the request was actually for

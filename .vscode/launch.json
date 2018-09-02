@@ -23,9 +23,8 @@
             "type": "php",
             "request": "launch",
             "pathMappings": {
-                "/Users/Jeff/Code/ch6-nginx-fpm": "/srv/app"
+                "/srv/app": "/Users/Jeff/Code/ch6-nginx-fpm"
             },
-            "port": 9001
-        }
+            "port": 9001        }
     ]
 }
