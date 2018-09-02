@@ -9,6 +9,7 @@ volumes:
     driver: "local"
 services:
   app:
+    env_file: .docker.env
     build:
       context: .
       dockerfile: .docker/php/Dockerfile
@@ -29,6 +30,7 @@ services:
     volumes:
       - ./public:/srv/app/public
   mariadb:
+    env_file: .docker.env
     image: mariadb:10.3
     restart: always
     container_name: mariadb
@@ -36,9 +38,6 @@ services:
       - "13306:3306"
     networks:
       - app-tier
-    environment:
-      - MYSQL_DATABASE=root
-      - MYSQL_ROOT_PASSWORD=secret
     volumes:
      - mysqldata:/var/lib/mysql
   redis:
