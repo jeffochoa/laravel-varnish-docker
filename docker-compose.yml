@@ -20,13 +20,15 @@ services:
     volumes:
       - .:/srv/app
   nginx:
+    depends_on:
+      - mariadb
+      - redis
+      - app
     build:
       context: .
       dockerfile: .docker/nginx/Dockerfile
     networks:
       - app-tier
-    ports:
-      - 8080:80
     volumes:
       - ./public:/srv/app/public
   mariadb:
@@ -46,3 +48,18 @@ services:
      - redisdata:/data
     networks:
      - app-tier
+  varnish:
+    tty: true
+    depends_on:
+      - nginx
+    restart: always
+    build:
+      context: .
+      dockerfile: .docker/varnish/Dockerfile
+    networks:
+      - app-tier
+    ports:
+      - 8080:8080
+    command: 'sh start'
+    volumes:
+      - .docker/varnish/default.vcl:/etc/varnish/default.vcl

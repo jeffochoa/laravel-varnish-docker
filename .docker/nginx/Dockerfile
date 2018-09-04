@@ -1,4 +1,4 @@
-FROM nginx:1.15
+FROM nginx:1.15 AS nginx
 LABEL maintainer="Paul Redmond"
 RUN rm /etc/nginx/conf.d/default.conf
 COPY .docker/nginx/nginx.conf /etc/nginx/nginx.conf
