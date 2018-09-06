@@ -1,27 +1,31 @@
-# Slim Framework 3 Skeleton Application
+# Requirements
+- Docker
+- Docker compose
 
-Use this skeleton application to quickly setup and start working on a new Slim Framework 3 application. This application uses the latest Slim 3 with the PHP-View template renderer. It also uses the Monolog logger.
+# Install
+Download and run:
+```
+docker-compose build
+```
 
-This skeleton application was built for Composer. This makes setting up a new Slim Framework application quick and easy.
+Then add the config for your local environment
+```
+cp .docker.env.example .docker.env
+```
 
-## Install the Application
+## Interacting with the containers
+Use the interactive console
+```
+docker exec -it laravel-app sh
+docker exec -it laravel-nginx sh
+docker exec -it laravel-varnish sh
+docker exec -it laravel-database sh
+```
 
-Run this command from the directory in which you want to install your new Slim Framework application.
-
-    php composer.phar create-project slim/slim-skeleton [my-app-name]
-
-Replace `[my-app-name]` with the desired directory name for your new application. You'll want to:
-
-* Point your virtual host document root to your new application's `public/` directory.
-* Ensure `logs/` is web writeable.
-
-To run the application in development, you can run these commands 
-
-	cd [my-app-name]
-	php composer.phar start
-
-Run this command in the application directory to run the test suite
-
-	php composer.phar test
-
-That's it! Now go build something cool.
+# TO DO
+- Set up to run laravel commands locally? (not sure)
+- node ?
+- Supervisor container to run jobs
+- Test redis config
+- Update port from config file? (currently 8080)
+- Update database port from config file

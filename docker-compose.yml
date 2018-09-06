@@ -9,6 +9,7 @@ volumes:
     driver: "local"
 services:
   app:
+    container_name: laravel-app
     env_file: .docker.env
     build:
       context: .
@@ -20,6 +21,7 @@ services:
     volumes:
       - .:/srv/app
   nginx:
+    container_name: laravel-nginx
     depends_on:
       - mariadb
       - redis
@@ -32,6 +34,7 @@ services:
     volumes:
       - ./public:/srv/app/public
   mariadb:
+    container_name: laravel-database
     env_file: .docker.env
     image: mariadb:10.3
     restart: always
@@ -49,6 +52,7 @@ services:
     networks:
      - app-tier
   varnish:
+    container_name: laravel-varnish
     tty: true
     depends_on:
       - nginx

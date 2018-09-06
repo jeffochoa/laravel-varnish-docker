@@ -2,3 +2,5 @@
 /logs/*
 !/logs/README.md
 .docker.env
+.vscode/
+.idea/
