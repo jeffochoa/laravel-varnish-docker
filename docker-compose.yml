@@ -67,3 +67,14 @@ services:
     command: 'sh start'
     volumes:
       - .docker/varnish/default.vcl:/etc/varnish/default.vcl
+  supervisor:
+    container_name: laravel-supervisor
+    build:
+      context: .
+      dockerfile: .docker/supervisor/Dockerfile
+    depends_on:
+      - nginx
+      - app
+    restart: always
+    volumes:
+      - .docker/supervisor/supervisor.conf:/etc/supervisor/conf.d
