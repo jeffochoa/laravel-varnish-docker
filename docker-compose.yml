@@ -20,11 +20,12 @@ services:
       - 9002:9000
     volumes:
       - .:/srv/app
+    depends_on:
+      - redis
   nginx:
     container_name: laravel-nginx
     depends_on:
       - mariadb
-      - redis
       - app
     build:
       context: .
@@ -67,14 +68,4 @@ services:
     command: 'sh start'
     volumes:
       - .docker/varnish/default.vcl:/etc/varnish/default.vcl
-  # supervisor:
-  #   container_name: laravel-supervisor
-  #   build:
-  #     context: .
-  #     dockerfile: .docker/supervisor/Dockerfile
-  #   depends_on:
-  #     - nginx
-  #     - app
-  #   restart: always
-  #   volumes:
-  #     - .docker/supervisor/supervisor.conf:/etc/supervisor/conf.d
+    # command: ['sh start']
