@@ -1,31 +1,69 @@
 # Requirements
+
 - Docker
 - Docker compose
 
-# Install
+## General disclaimer
+
+**Do not use on production.** This image is meant to be use for development purposes only, the use of it on a production environment is all up to your entire responsibility.
+
+## Includes
+
+- Varnish
+- Redis
+- MariaDB
+- Nginx
+- Supervisor
+
+## Install
+
 Download and run:
-```
-docker-compose build
+
+```bash
+docker-compose build --no-cache
 ```
 
+> The `public/` folder must be present before build the image
+
 Then add the config for your local environment
-```
+
+```bash
 cp .docker.env.example .docker.env
 ```
 
 ## Interacting with the containers
+
 Use the interactive console
-```
-docker exec -it laravel-app sh
-docker exec -it laravel-nginx sh
-docker exec -it laravel-varnish sh
-docker exec -it laravel-database sh
+
+```bash
+docker exec -it laravel-app bash
+docker exec -it laravel-nginx bash
+docker exec -it laravel-varnish bash
+docker exec -it laravel-database bash
 ```
 
-# TO DO
-- Set up to run laravel commands locally? (not sure)
-- node ?
-- Supervisor container to run jobs
-- Test redis config
-- Update port from config file? (currently 8080)
-- Update database port from config file
+## Running supervisor
+
+Open the terminal in the app container
+
+```bash
+docker exec -it laravel-app bash
+```
+
+Then start the laravel worker
+
+```bash
+supervisorctl start laravel-worker:*
+```
+
+ ---
+
+ # Want to know more about Docker?
+> Learn How to Make PHP Development with Docker Feel like 127.0.0.1
+
+ [![Docker for PHP developers](https://bitpress.io/assets/images/docker-book/lead-product.png)](https://bitpress.io/docker-for-php-developers/)
+
+This book and video-course was created by [@paulredmon](https://twitter.com/paulredmond)
+
+# Licence
+This package is an open-sourced software licensed under the MIT license.
